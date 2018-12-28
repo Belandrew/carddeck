@@ -6,19 +6,18 @@ public class Test {
 
     public static void main(String[] args) {
 
-        Card curCard=null;
+        Card curCard = null;
 
         Deck deck = new Deck();
         deck.order();
         deck.shuffle();
-       curCard = deck.drawOne();
-       System.out.println(curCard.getRank().getName()+" "+curCard.getSuit().getName());
+        curCard = deck.drawOne();
+        System.out.println(curCard.getRank().getName() + " " + curCard.getSuit().getName());
         System.out.println(deck.hasNext());
 
         //System.out.println(card.getRank().getName());
-       // System.out.println(card.getSuit().getName());
+        // System.out.println(card.getSuit().getName());
 
 
-
-
-}}
+    }
+}

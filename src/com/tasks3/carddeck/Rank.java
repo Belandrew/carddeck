@@ -11,7 +11,7 @@ public class Rank {
     public static final Rank SEVEN = new Rank("7");
     public static final Rank SIX = new Rank("6");
 
-    public static Rank[] values = { ACE, KING, QUEEN, JACK, TEN, NINE, EIGHT, SEVEN, SIX };
+    public static Rank[] values = {ACE, KING, QUEEN, JACK, TEN, NINE, EIGHT, SEVEN, SIX};
 
     private String name;
 
