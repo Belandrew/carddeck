@@ -1,23 +1,30 @@
 package com.tasks3.carddeck;
 
 public class Test {
-    private static Rank rank;
-    private static Suit suit;
 
     public static void main(String[] args) {
-
-        Card curCard = null;
-
         Deck deck = new Deck();
-        deck.order();
+        System.out.println(deck);
         deck.shuffle();
-        curCard = deck.drawOne();
-        System.out.println(curCard.getRank().getName() + " " + curCard.getSuit().getName());
-        System.out.println(deck.hasNext());
+        System.out.println(deck);
+        deck.order();
+        System.out.println(deck);
 
-        //System.out.println(card.getRank().getName());
-        // System.out.println(card.getSuit().getName());
+        // optional print
+        printDeck(deck);
+    }
 
-
+    /**
+     * Optional way to print the desk (desk.toString() can be used instead)
+     *
+     * @param deck - deck to print
+     */
+    private static void printDeck(Deck deck) {
+        deck.resetIterator();
+        while (deck.hasNext()) {
+            Card card = deck.drawOne();
+//            Card card = deck.next();  // the same
+            System.out.println(card.getSuit().getName() + "-" + card.getRank().getName());
+        }
     }
 }

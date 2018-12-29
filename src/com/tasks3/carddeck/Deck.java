@@ -1,24 +1,35 @@
 package com.tasks3.carddeck;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class Deck {
-    private Rank rank;
-    private Suit suit;
-    private Card card;
-    private final List<Card> deck = new ArrayList<>();
-    private Random randomizer = new Random();
+public class Deck implements Iterator<Card> {
+    private static final int SHUFFLE_ITERATIONS = 1000;
+    private final List<Card> deck;
+    private Iterator<Card> iterator;
 
-    //Тосовать колоду
-    public void shuffle() {
-        for (int i = 0; i < deck.size(); i++) {
-            card = deck.get(i);
-            int number = randomizer.nextInt(deck.size() - 1);
-            deck.set(i, deck.get(number));
-            deck.set(number, card);
+    public Deck() {
+        deck = new ArrayList<>();
+        for (Suit suit : Suit.values) {
+            for (Rank rank : Rank.values) {
+                deck.add(new Card(rank, suit));
+            }
         }
+        iterator = deck.iterator();
+    }
+
+    public void shuffle() {
+        Random random = new Random();
+        for (int i = 0; i < SHUFFLE_ITERATIONS; i++) {
+            int first = random.nextInt(deck.size());
+            int second = random.nextInt(deck.size());
+            Card card = deck.get(first);
+            deck.set(first, deck.get(second));
+            deck.set(second, card);
+        }
+        iterator = deck.iterator();
     }
 
     /* * Впорядкування колоди за мастями та значеннями
@@ -37,33 +48,47 @@ public class Deck {
      * HEARTS 6
      * І так далі для DIAMONDS, CLUBS, SPADES */
     public void order() {
-        deck.clear();
-        int ind = 0;
-        for (int i = 0; i < 4; i++) {
-            suit = Suit.values[i];
-            for (int n = 0; n < 9; n++) {
-                rank = Rank.values[n];
-                deck.add(new Card(rank, suit));
-
-
-            }
-        }
+//        List<Suit> suits = Arrays.asList(Suit.values);
+//        List<Rank> ranks = Arrays.asList(Rank.values);
+//        deck.sort((card1, card2) -> {
+//            int compareBySuit = Integer.compare(suits.indexOf(card1.getSuit()), suits.indexOf(card2.getSuit()));
+//            if (compareBySuit != 0) return compareBySuit;
+//            return Integer.compare(ranks.indexOf(card1.getRank()), ranks.indexOf(card2.getRank()));
+//        });
+        deck.sort(new FactoryDefaultComparator());
+        iterator = deck.iterator();
     }
 
     //Повертає true у випадку коли в колоді ще доступні карти
     public boolean hasNext() {
-        if (deck.size() > 0)
-            return true;
-        else return false;
+        return iterator.hasNext();
+    }
+
+    @Override
+    public Card next() {
+        return iterator.next();
+    }
+
+    public void resetIterator() {
+        iterator = deck.iterator();
     }
 
     //"Виймає" одну карту з колоди, коли буде видано всі 36 карт повертає null
     //Карти виймаються з "вершини" колоди. Наприклад перший виклик видасть SPADES 6 потім
     //SPADES 7, ..., CLUBS 6, ..., CLUBS Ace і так далі до HEARTS Ace
     public Card drawOne() {
-        card = deck.get(deck.size() - 1);
-        deck.remove(deck.size() - 1);
-        return card;
+        if (hasNext()) {
+            return next();
+        }
+        return null;
     }
 
+    @Override
+    public String toString() {
+        String out = "====The deck====\n";
+        for (Card card : deck) {
+            out += (card.getSuit().getName() + "-" + card.getRank().getName() + "\n");
+        }
+        return out;
+    }
 }
