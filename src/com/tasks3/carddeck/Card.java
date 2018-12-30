@@ -7,7 +7,7 @@ public class Card {
     //Так правильно?
     @Override
     public String toString() {
-       // String out = "====The deck====\n";
+       // /String out = "====The deck====\n";
         String out = "====The card====\n";
         //for (Card card : deck) {
             out += (getSuit().getName() + "-" + getRank().getName() + "\n");
