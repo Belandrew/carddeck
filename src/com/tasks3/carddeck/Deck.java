@@ -82,13 +82,22 @@ public class Deck implements Iterator<Card> {
         }
         return null;
     }
-
-    @Override
-    public String toString() {
+    //Так правильно?
+    public String printDeck() {
         String out = "====The deck====\n";
         for (Card card : deck) {
             out += (card.getSuit().getName() + "-" + card.getRank().getName() + "\n");
         }
         return out;
     }
+   /* @Override
+    public String toString() {
+        String out = "====The deck====\n";
+        for (Card card : deck) {
+        out += (getSuit().getName() + "-" + getRank().getName() + "\n");
+         }
+        return out;
+    }*/
+
+
 }

@@ -10,9 +10,9 @@ public class FactoryDefaultComparator implements Comparator<Card> {
 
     @Override
     public int compare(Card card1, Card card2) {
-        int compareBySuit = Integer.compare(suits.indexOf(card1.getSuit()), suits.indexOf(card2.getSuit()));
+        int compareBySuit = Integer.compare(ranks.indexOf(card1.getRank()), ranks.indexOf(card2.getRank()));
         if (compareBySuit != 0) return compareBySuit;
 
-        return Integer.compare(ranks.indexOf(card1.getRank()), ranks.indexOf(card2.getRank()));
+        return Integer.compare(suits.indexOf(card1.getSuit()), suits.indexOf(card2.getSuit()));
     }
 }
